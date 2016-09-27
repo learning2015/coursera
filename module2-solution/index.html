@@ -4,7 +4,9 @@
     <title>Shopping List Check Off</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/animate.css">
     <script src="angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
     <script src="app.js"></script>
 
     </script>
@@ -12,11 +14,19 @@
       .emptyMessage {
         font-weight: bold;
         color: red;
-        font-size: 1.2em;
+        font-size: 1.5em;
+      }
+      .ng-if {
+
+      }
+      ul {
+        padding-left: 0px;
       }
       li {
-        margin-bottom: 7px;
+        padding: 7px;
         font-size: 1.2em;
+        border: 1px solid black;
+        list-style: none;
       }
       li > button {
         margin-left: 6px;
@@ -24,19 +34,53 @@
       button > span {
         color: green;
       }
+
+<!--------->
+.animate-container {
+  background:white;
+  border:1px solid black;
+  list-style:none;
+  margin:0;
+  padding:0 10px;
+}
+.animate-repeat {
+  line-height:30px;
+  list-style:none;
+  box-sizing:border-box;
+}
+.animate-repeat.ng-move,
+.animate-repeat.ng-enter,
+.animate-repeat.ng-leave {
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+}
+.animate-repeat.ng-leave.ng-leave-active,
+.animate-repeat.ng-move,
+.animate-repeat.ng-enter {
+  opacity:0;
+
+}
+.animate-repeat.ng-leave,
+.animate-repeat.ng-move.ng-move-active,
+.animate-repeat.ng-enter.ng-enter-active {
+  opacity:1;
+
+}
+.foo {
+  height: 50px;
+}
     </style>
   </head>
-<body>
+<body class="animated rollIn">
   <div class="container">
   <h1>Shopping List Check Off</h1>
 
   <div class="row">
 
     <!-- To Buy List -->
-    <div ng-controller='ToBuyController as list' class="col-md-6">
-     <h2>To Buy:</h2>
+    <div ng-controller='ToBuyController as list' class="col-md-6 animate-container">
+     <h2>To Buy: ({{ list.items.length }})</h2>
      <ul>
-       <li ng-repeat="item in list.items">Buy {{item.quantity}} {{item.name}}
+       <li class="animate-repeat" ng-repeat="item in list.items">Buy {{item.quantity}} {{item.name}}
          <button ng-click="list.buyItem($index)" class="btn btn-default">
            <span class="glyphicon glyphicon-ok"></span> Bought</button></li>
        <!-- <li>Buy 10 cookies <button class="btn btn-default"><span class="glyphicon glyphicon-ok"></span> Bought</button></li> -->
@@ -46,9 +90,9 @@
 
     <!-- Already Bought List -->
     <div class="col-md-6" ng-controller='AlreadyBoughtController as bought'>
-     <h2>Already Bought:</h2>
+     <h2>Already Bought: ({{ bought.items.length }})</h2>
      <ul>
-       <li ng-repeat="item in bought.items">Bought {{item.quantity}} {{item.name}}</li>
+       <li class="animate-repeat foo" ng-repeat="item in bought.items">Bought {{item.quantity}} {{item.name}}</li>
      </ul>
      <div ng-if="bought.items.length == 0" class="emptyMessage">Nothing bought yet.</div>
     </div>

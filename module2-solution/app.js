@@ -4,27 +4,27 @@
 angular.module('ShoppingListCheckoff', ['ngAnimate'])
 .controller('ToBuyController', ToBuyController)
 .controller('AlreadyBoughtController', AlreadyBoughtController)
-.service('ShoppingListService', ShoppingListService);
+.service('ShoppingListCheckoffService', ShoppingListCheckoffService);
 
-ToBuyController.$inject = ['ShoppingListService'];
-function ToBuyController(ShoppingListService) {
+ToBuyController.$inject = ['ShoppingListCheckoffService'];
+function ToBuyController(ShoppingListCheckoffService) {
   var list = this;
-  list.items = ShoppingListService.getToBuy();
+  list.items = ShoppingListCheckoffService.getToBuy();
 
   list.buyItem = function (itemIndex) {
-    ShoppingListService.buyItem(itemIndex);
+    ShoppingListCheckoffService.buyItem(itemIndex);
   }
 
 }
 
-AlreadyBoughtController.$inject = ['ShoppingListService'];
-function AlreadyBoughtController(ShoppingListService) {
+AlreadyBoughtController.$inject = ['ShoppingListCheckoffService'];
+function AlreadyBoughtController(ShoppingListCheckoffService) {
   var bought = this;
-  bought.items = ShoppingListService.boughtItems();
+  bought.items = ShoppingListCheckoffService.boughtItems();
 }
 
 
-function ShoppingListService() {
+function ShoppingListCheckoffService() {
   var service = this;
 
   var toBuy = [
@@ -43,7 +43,6 @@ function ShoppingListService() {
   service.buyItem = function (itemIndex) {
     alreadyBought.push(toBuy[itemIndex]);
     toBuy.splice(itemIndex, 1);
-    //alreadyBought.push(itemIndex);
   };
 
   service.boughtItems = function () {
